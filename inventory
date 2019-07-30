@@ -1,1 +1,1 @@
-ec2
+ec2 ansible_python_interpreter=/usr/bin/python3
