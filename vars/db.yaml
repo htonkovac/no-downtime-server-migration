@@ -1,0 +1,5 @@
+mysql_root_password: ""
+mysql_databases:
+  - name: Go_MySQL_Sample
+    encoding: latin1
+    collation: latin1_general_ci
