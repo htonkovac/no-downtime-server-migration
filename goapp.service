@@ -1,0 +1,13 @@
+[Unit]
+Description=Simple Go application connected to a MySQL Database
+
+[Service]
+Type=simple
+User=ubuntu
+Restart=always
+RestartSec=5s
+WorkingDirectory=/home/ubuntu/app
+ExecStart=/usr/bin/go run /home/ubuntu/app/main.go
+
+[Install]
+WantedBy=multi-user.target

@@ -2,6 +2,33 @@
   vars_files: 
     -  vars/db.yaml
   roles:
-   - {  role: nginxinc.nginx, become: true  }
-   - {  role: geerlingguy.mysql, become: true }
- 
+    - {  role: nginxinc.nginx, become: true  }
+    - {  role: geerlingguy.mysql, become: true }
+  tasks:
+   - name: install go 
+     package:
+       name: golang
+       state: present 
+     become: true
+   - name: install git
+     package:
+       name: git
+       state: present
+     become: true
+   - name: download go app dependancies
+     command: go get github.com/go-sql-driver/mysql 
+   - name: download go app 
+     command: git clone https://github.com/diatmpravin/Go-MySQL-Sample-App app
+   - name: Create Unit file for go app
+     copy: src=goapp.service dest=/etc/systemd/system/goapp.service mode=644
+     notify:
+       - reload systemd
+     become: yes
+   - name: Start and enable goapp
+     service: name=goapp.service state=started enabled=yes
+     become: true
+
+  handlers:
+   - name: reload systemd
+     command: systemctl daemon-reload
+     become: true
